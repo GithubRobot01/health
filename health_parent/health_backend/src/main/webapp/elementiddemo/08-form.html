@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+
+    <!-- 引入ElementUI样式 -->
+    <link rel="stylesheet" href="../elementui/index.css">
+    <!--vue的js文件-->
+    <script src="../elementui/vue.js"></script>
+    <!-- 引入ElementUI组件库 -->
+    <script src="../elementui/index.js"></script>
+
+
+</head>
+<body>
+    <div id="app">
+
+
+        <!--
+            el-form:设置一个表单
+                ref : 表单的标识，表示是要被vue的校验服务找到的标识，this.$refs['form']：根据表单标识获取表单对象
+                :model:   v-bind:model  :绑定数据模型，方便表单中的表单域使用数据模型中的数据，或者存储数据到数据模型中
+	            :rules：v-bind:rules :绑定表单验证规则
+
+	            :model和:rules只负责绑定操作，不负责使用，使用是在具体的表单域中
+        -->
+        <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+            <!--
+                el-form-item：设置一个表单域
+                    label ：名称
+                    prop：表单域绑定数据，可以设置获取自定义的校验规则
+            -->
+            <el-form-item label="活动名称" prop="name">
+                <!--el-input ： 输入框
+                    v-model="form.name" ： 表示输入框的value数据绑定到form数据模型的name属性
+                -->
+                <el-input v-model="form.name"></el-input>
+            </el-form-item>
+
+            <el-form-item label="活动区域" prop="region">
+
+
+                <!--el-select ： select标签
+                        placeholder ： 不选择或者不输入的时候默认显示的内容
+                -->
+                <el-select v-model="form.region" placeholder="请选择活动区域">
+                    <!--el-option : option标签-->
+                    <el-option label="区域一" value="shanghai"></el-option>
+                    <el-option label="区域二" value="beijing"></el-option>
+                </el-select>
+            </el-form-item>
+
+            <el-form-item label="活动时间">
+                <el-col :span="11">
+                    <!--el-date-picker ： 日期的选择标签-->
+                    <el-date-picker type="date" placeholder="选择日期" v-model="form.date1" style="width: 100%;"></el-date-picker>
+                </el-col>
+                <el-col class="line" :span="2">-</el-col>
+                <el-col :span="11">
+                    <!--el-time-picker ： 事件的选择标签-->
+                    <el-time-picker type="fixed-time" placeholder="选择时间" v-model="form.date2" style="width: 100%;"></el-time-picker>
+                </el-col>
+            </el-form-item>
+
+            <el-form-item label="即时配送">
+                <el-switch v-model="form.delivery"></el-switch>
+            </el-form-item>
+
+
+            <el-form-item label="活动性质">
+                <el-checkbox-group v-model="form.type">
+                    <el-checkbox label="美食/餐厅线上活动" name="type"></el-checkbox>
+                    <el-checkbox label="地推活动" name="type"></el-checkbox>
+                    <el-checkbox label="线下主题活动" name="type"></el-checkbox>
+                    <el-checkbox label="单纯品牌曝光" name="type"></el-checkbox>
+                </el-checkbox-group>
+            </el-form-item>
+            <el-form-item label="特殊资源">
+                <el-radio-group v-model="form.resource">
+                    <el-radio label="线上品牌商赞助"></el-radio>
+                    <el-radio label="线下场地免费"></el-radio>
+                </el-radio-group>
+            </el-form-item>
+            <el-form-item label="活动形式">
+                <!--textarea ：文本域-->
+                <el-input type="textarea" v-model="form.desc"></el-input>
+            </el-form-item>
+            <el-form-item>
+                <el-button type="primary" @click="onSubmit">立即创建</el-button>
+            </el-form-item>
+        </el-form>
+        <script>
+            new Vue({
+                el:'#app',
+                data:{
+                    form: {
+                        name: '',//是让表单中的表单域可以进行使用
+                        region: '',
+                        date1: '',
+                        date2: '',
+                        delivery: false,
+                        type: [],
+                        resource: '',
+                        desc: ''
+                    },
+                    //定义校验规则
+                    rules: {
+                        /*required ：必须输入
+                        * message：不满足时提示信息
+                        * trigger：触发条件 blur：失去焦点，change，选择的时候
+                        * min：最小长度
+                        * max: 最大长度
+                        */
+                        name: [
+                            { required: true, message: '请输入活动名称', trigger: 'blur' },
+                            { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+                        ],
+                        region: [
+                            { required: true, message: '请选择活动区域', trigger: 'change' }
+                        ]
+                    }
+                },
+                methods:{
+                    onSubmit(){
+
+                        //进行输入校验
+                        //$refs : 校验服务
+                        //this.$refs['form'] :获取ref属性为form文本表单的对象
+                        //.validate : 自动进行检验操作  校验的结果存在的参数valid
+                        this.$refs['form'].validate((valid)=>{
+                            alert(valid);
+                        });
+
+
+                    }
+                }
+            });
+        </script>
+    </div>
+</body>
+</html>

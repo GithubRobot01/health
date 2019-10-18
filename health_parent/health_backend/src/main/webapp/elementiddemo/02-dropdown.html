@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <!-- 引入ElementUI样式 -->
+    <link rel="stylesheet" href="../elementui/index.css">
+    <!--vue的js文件-->
+    <script src="../elementui/vue.js"></script>
+    <!-- 引入ElementUI组件库 -->
+    <script src="../elementui/index.js"></script>
+
+</head>
+<body>
+    <div id="app">
+        <!--el-dropdown ：下拉组件-->
+        <el-dropdown split-button type="primary" trigger="click">
+            默认尺寸
+            <!--el-dropdown-menu ：下拉菜单-->
+            <el-dropdown-menu slot="dropdown">
+
+                <!--el-dropdown-item ：菜单选项-->
+                <el-dropdown-item disabled>黄金糕</el-dropdown-item>
+                <el-dropdown-item divided disabled>狮子头</el-dropdown-item>
+                <el-dropdown-item divided disabled>螺蛳粉</el-dropdown-item>
+                <el-dropdown-item divided disabled>双皮奶</el-dropdown-item>
+                <el-dropdown-item divided disabled>蚵仔煎</el-dropdown-item>
+            </el-dropdown-menu>
+        </el-dropdown>
+
+        <!--size ：下拉组件尺寸-->
+        <el-dropdown size="medium" split-button type="primary">
+            中等尺寸
+            <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item>黄金糕</el-dropdown-item>
+                <el-dropdown-item>狮子头</el-dropdown-item>
+                <el-dropdown-item>螺蛳粉</el-dropdown-item>
+                <el-dropdown-item>双皮奶</el-dropdown-item>
+                <el-dropdown-item>蚵仔煎</el-dropdown-item>
+            </el-dropdown-menu>
+        </el-dropdown>
+
+        <el-dropdown size="small" split-button type="primary">
+            小型尺寸
+            <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item>黄金糕</el-dropdown-item>
+                <el-dropdown-item>狮子头</el-dropdown-item>
+                <el-dropdown-item>螺蛳粉</el-dropdown-item>
+                <el-dropdown-item>双皮奶</el-dropdown-item>
+                <el-dropdown-item>蚵仔煎</el-dropdown-item>
+            </el-dropdown-menu>
+        </el-dropdown>
+
+        <!--el-dropdown ：下拉组件
+                size ： 尺寸  mini、small，medium
+                split-button ： 表示一个按钮
+                type ： 样式
+                trigger ： 设置事件操作，可以不设置，默认鼠标悬停显示下拉列表
+         -->
+        <el-dropdown size="mini" split-button type="primary" trigger="click">
+            超小尺寸
+            <!--el-dropdown-menu ： 下拉菜单-->
+            <el-dropdown-menu slot="dropdown">
+
+                <!--el-dropdown-item ： 菜单选项
+                        divided ： 分隔线
+                        disabled ： 不可用，可以不设置，默认可用
+                -->
+                <el-dropdown-item >黄金糕</el-dropdown-item>
+                <el-dropdown-item divided>狮子头</el-dropdown-item>
+                <el-dropdown-item divided>螺蛳粉</el-dropdown-item>
+                <el-dropdown-item divided>双皮奶</el-dropdown-item>
+                <el-dropdown-item divided disabled>蚵仔煎</el-dropdown-item>
+            </el-dropdown-menu>
+        </el-dropdown>
+    </div>
+    <script>
+        new Vue({
+            el:'#app'
+        });
+    </script>
+</body>
+</html>

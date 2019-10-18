@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <!-- 引入ElementUI样式 -->
+    <link rel="stylesheet" href="../elementui/index.css">
+    <!--vue的js文件-->
+    <script src="../elementui/vue.js"></script>
+    <!-- 引入ElementUI组件库 -->
+    <script src="../elementui/index.js"></script>
+</head>
+<body>
+
+<!--3.在vue的作用域中使用elementUI组件构建效果-->
+<div id="app">
+    <!--el-container ：布局容器-->
+    <el-container>
+        <!--el-header ： 头部容器-->
+        <el-header>
+            header部分
+        </el-header>
+        <el-container>
+            <!--el-aside ：侧边栏容器-->
+            <el-aside width="200px">
+                aside部分
+            </el-aside>
+            <el-container>
+                <!--el-main ： 主要区域容器-->
+                <el-main>
+                    main部分
+                </el-main>
+                <!--el-footer ： 底部容器-->
+                <el-footer>
+                    footer部分
+                </el-footer>
+            </el-container>
+        </el-container>
+    </el-container>
+</div>
+<style>
+
+    .el-header, .el-footer {
+        background-color: #B3C0D1;
+        color: #333;
+        text-align: left;
+        line-height: 60px;
+    }
+
+    .el-aside {
+        background-color: #D3DCE6;
+        color: #333;
+        text-align: center;
+        line-height: 200px;
+    }
+
+    .el-main {
+        background-color: #E9EEF3;
+        color: #333;
+        text-align: center;
+        line-height: 590px;
+    }
+</style>
+<!--2.初始化vue-->
+<script>
+    new Vue({
+        el:'#app'//设置vue作用域
+    });
+</script>
+
+</body>
+</html>

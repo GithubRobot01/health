@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <!-- 引入ElementUI样式 -->
+    <link rel="stylesheet" href="../elementui/index.css">
+    <!--vue的js文件-->
+    <script src="../elementui/vue.js"></script>
+    <!-- 引入ElementUI组件库 -->
+    <script src="../elementui/index.js"></script>
+
+</head>
+<body>
+    <div id="app">
+
+        <!--el-menu：表示整个导航菜单
+                 mode="horizontal" ： 表示设置导航菜单的样式，horizontal：横向  ，不写mode属性：默认竖向
+        -->
+        <el-menu >
+            <!--el-submenu ：导航菜单选项
+                   index:表示菜单的标识
+            -->
+            <el-submenu index="1">
+
+                <!--template ：模板列，设置导航菜单的内容-->
+                <template slot="title">
+                    <i class="el-icon-location"></i>
+                    <span slot="title">导航一</span>
+                </template>
+
+                <!--el-menu-item ： 导航菜单选项子菜单-->
+                <el-menu-item>添加用户</el-menu-item>
+                <el-menu-item>删除用户</el-menu-item>
+                <el-menu-item>修改用户信息</el-menu-item>
+            </el-submenu>
+
+            <el-submenu index="2">
+                <template slot="title">
+                    <i class="el-icon-menu"></i>
+                    <span slot="title">导航二</span>
+                </template>
+                <el-menu-item>选项1</el-menu-item>
+                <el-menu-item>选项2</el-menu-item>
+                <el-menu-item>选项3</el-menu-item>
+            </el-submenu>
+        </el-menu>
+    </div>
+    <script>
+        new Vue({
+            el:'#app'
+        });
+    </script>
+</body>
+</html>

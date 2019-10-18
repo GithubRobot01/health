@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <!-- 引入ElementUI样式 -->
+    <link rel="stylesheet" href="../elementui/index.css">
+    <!--vue的js文件-->
+    <script src="../elementui/vue.js"></script>
+    <!-- 引入ElementUI组件库 -->
+    <script src="../elementui/index.js"></script>
+
+</head>
+<body>
+    <div id="app">
+        <!--
+        el-pagination ： 分页组件
+            @ : v-on:事件名称    绑定事件
+            current-change：内置的事件，当前页码改变时会触发，可以获取到改变之后的页码，点击页码调用的方法
+            current-page: 当前页
+            page-size：每页条数
+            layout：对应按钮
+                total：总条数按钮
+                prev：上一页按钮
+                pager：页码按钮
+                next：下一页按钮
+                jumper：跳页面按钮
+                sizes：设置选择每页显示条数组件
+            :total: 总条数
+            :page-sizes：选择每页显示条数的选项，注意，显示条数不能大于总条数
+        -->
+        <el-pagination
+                @current-change="handleCurrentChange"
+                current-page="5"
+                page-size="10"
+                :page-sizes="[10, 20, 30, 40]"
+                layout="total, sizes,prev, pager, next, jumper"
+                :total="305">
+        </el-pagination>
+        <script>
+            new Vue({
+                el:'#app',
+                methods:{
+                    handleCurrentChange(page){//page:被点击的页码
+                        alert(page);
+                    }
+                }
+            });
+        </script>
+    </div>
+</body>
+</html>

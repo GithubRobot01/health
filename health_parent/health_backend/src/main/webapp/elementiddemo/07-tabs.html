@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <!-- 引入ElementUI样式 -->
+    <link rel="stylesheet" href="../elementui/index.css">
+    <!--vue的js文件-->
+    <script src="../elementui/vue.js"></script>
+    <!-- 引入ElementUI组件库 -->
+    <script src="../elementui/index.js"></script>
+
+</head>
+<body>
+    <div id="app">
+        <h3>基础的、简洁的标签页</h3>
+        <!--
+        el-tabs ：设置tabs标签页
+            value : 来指定当前选中的标签选项
+            type：指定标签页的样式
+        -->
+        <el-tabs value="second">
+
+            <!--el-tab-pane ：设置标签页的选项
+                    label ： 选项上显示文字
+                    name :  选项的标识名称，用来唯一标识选项
+                    <el-tab-pane></el-tab-pane>内的内容可以是html标签编写的任何页面效果
+            -->
+            <el-tab-pane label="用户管理" name="first">用户管理...</el-tab-pane>
+            <el-tab-pane label="配置管理" name="second">配置管理</el-tab-pane>
+            <el-tab-pane label="角色管理" name="third">角色管理</el-tab-pane>
+            <el-tab-pane label="定时任务补偿" name="fourth">定时任务补偿</el-tab-pane>
+        </el-tabs>
+        <h3>选项卡样式的标签页</h3>
+        <el-tabs value="first" type="card">
+            <el-tab-pane label="用户管理" name="first">用户管理</el-tab-pane>
+            <el-tab-pane label="配置管理" name="second">配置管理</el-tab-pane>
+            <el-tab-pane label="角色管理" name="third">角色管理</el-tab-pane>
+            <el-tab-pane label="定时任务补偿" name="fourth">定时任务补偿</el-tab-pane>
+        </el-tabs>
+        <h3>卡片化的标签页</h3>
+        <el-tabs value="first" type="border-card">
+            <el-tab-pane label="用户管理" name="first">用户管理</el-tab-pane>
+            <el-tab-pane label="配置管理" name="second">配置管理</el-tab-pane>
+            <el-tab-pane label="角色管理" name="third">角色管理</el-tab-pane>
+            <el-tab-pane label="定时任务补偿" name="fourth">定时任务补偿</el-tab-pane>
+        </el-tabs>
+        <script>
+            new Vue({
+                el:'#app',
+                methods:{
+
+                }
+            });
+        </script>
+    </div>
+</body>
+</html>
