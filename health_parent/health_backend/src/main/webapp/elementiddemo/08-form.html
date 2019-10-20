@@ -107,7 +107,8 @@
                     },
                     //定义校验规则
                     rules: {
-                        /*required ：必须输入
+                        /*
+                        required ：必须输入
                         * message：不满足时提示信息
                         * trigger：触发条件 blur：失去焦点，change，选择的时候
                         * min：最小长度
@@ -126,6 +127,7 @@
                     onSubmit(){
 
                         //进行输入校验
+                        //this: vue对象
                         //$refs : 校验服务
                         //this.$refs['form'] :获取ref属性为form文本表单的对象
                         //.validate : 自动进行检验操作  校验的结果存在的参数valid
