@@ -47,5 +47,5 @@
 
 
     <!--<mvc:default-servlet-handler/>-->
-
+    <import resource="spring-redis.xml"/>
 </beans>

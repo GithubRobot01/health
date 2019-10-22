@@ -4,6 +4,8 @@ import cn.itcast.entity.PageResult;
 import cn.itcast.entity.QueryPageBean;
 import cn.itcast.pojo.CheckItem;
 
+import java.util.List;
+
 //服务接口
 public interface CheckItemService {
     /**
@@ -37,4 +39,10 @@ public interface CheckItemService {
      * @param checkItem
      */
     void update(CheckItem checkItem);
+
+    /**
+     * 查询所有检查项
+     * @return
+     */
+    List<CheckItem> findAll();
 }

@@ -58,4 +58,8 @@
         </set>
         where id = #{id}
     </update>
+
+    <select id="findAll" resultType="CheckItem">
+        select * from t_checkitem
+    </select>
 </mapper>

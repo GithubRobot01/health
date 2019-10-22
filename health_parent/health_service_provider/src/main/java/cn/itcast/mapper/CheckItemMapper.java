@@ -3,6 +3,8 @@ package cn.itcast.mapper;
 import cn.itcast.pojo.CheckItem;
 import com.github.pagehelper.Page;
 
+import java.util.List;
+
 public interface CheckItemMapper {
     /**
      * 添加检查项
@@ -42,4 +44,10 @@ public interface CheckItemMapper {
      * @param checkItem
      */
     void update(CheckItem checkItem);
+
+    /**
+     * 查询所有检查项信息
+     * @return
+     */
+    List<CheckItem> findAll();
 }
