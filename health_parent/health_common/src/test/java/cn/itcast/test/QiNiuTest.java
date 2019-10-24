@@ -12,9 +12,8 @@ import com.qiniu.util.Auth;
 import org.junit.Test;
 
 public class QiNiuTest {
-
     //上传图片
-    @Test
+    /*@Test
     public void test1(){
         //构造一个带指定 Region 对象的配置类
         Configuration cfg = new Configuration(Zone.zone0());
@@ -68,5 +67,5 @@ public class QiNiuTest {
             System.err.println(ex.code());
             System.err.println(ex.response.toString());
         }
-    }
+    }*/
 }

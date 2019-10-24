@@ -39,8 +39,8 @@ public class SetmealController {
         //获得原始文件名,通过原始文件名可以得到文件后缀名
         String originalFilename = imgFile.getOriginalFilename();
         int index = originalFilename.lastIndexOf(".");
-        String extention = originalFilename.substring(index-1);
-        String fileName= UUID.randomUUID().toString()+extention;
+        String extension = originalFilename.substring(index);
+        String fileName= UUID.randomUUID().toString()+extension;
         try {
             //将文件上传到七牛云服务器
             QiniuUtils.upload2Qiniu(imgFile.getBytes(),fileName);
