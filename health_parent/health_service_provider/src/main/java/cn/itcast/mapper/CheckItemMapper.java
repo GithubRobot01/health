@@ -2,6 +2,10 @@ package cn.itcast.mapper;
 
 import cn.itcast.pojo.CheckItem;
 import com.github.pagehelper.Page;
+import org.apache.ibatis.annotations.Many;
+import org.apache.ibatis.annotations.Result;
+import org.apache.ibatis.annotations.Results;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -50,4 +54,18 @@ public interface CheckItemMapper {
      * @return
      */
     List<CheckItem> findAll();
+
+    @Select("select * from t_checkitem where id in(select checkitem_id from t_checkgroup_checkitem where checkgroup_id=#{id})")
+    @Results({
+            @Result(id = true,property = "id",column = "id"),
+            @Result(property = "code",column = "code"),
+            @Result(property = "name",column = "name"),
+            @Result(property = "sex",column = "sex"),
+            @Result(property = "age",column = "age"),
+            @Result(property = "price",column = "price"),
+            @Result(property = "type",column = "type"),
+            @Result(property = "remark",column = "remark"),
+            @Result(property = "attention",column = "attention"),
+    })
+    List<CheckItem> findCheckItemById(int id);
 }

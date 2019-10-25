@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import redis.clients.jedis.JedisPool;
 
+import java.util.List;
+
 @Service(interfaceClass = SetmealService.class)
 @Transactional
 public class SetmealServiceImpl implements SetmealService {
@@ -50,5 +52,23 @@ public class SetmealServiceImpl implements SetmealService {
         Page<Setmeal> page=setmealMapper.findByCondition(queryString);
 
         return new PageResult(page.getTotal(),page.getResult());
+    }
+
+    @Override
+    public Setmeal findById(Integer id) {
+        return setmealMapper.findById(id);
+    }
+
+    //移动端
+    @Override
+    public List<Setmeal> getAllSetmeal() {
+        return setmealMapper.getAllSetmeal();
+    }
+
+    //移动端获取套餐信息(套餐包含的检查组信息,检查组包含的检查项信息)
+    @Override
+    public Setmeal findBySetmealId(int id) {
+        Setmeal setmeal = setmealMapper.findBySetmealId(id);
+        return setmeal;
     }
 }

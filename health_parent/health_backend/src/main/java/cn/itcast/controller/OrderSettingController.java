@@ -6,9 +6,7 @@ import cn.itcast.pojo.OrderSetting;
 import cn.itcast.service.OrderSettingService;
 import cn.itcast.utils.POIUtils;
 import com.alibaba.dubbo.config.annotation.Reference;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -53,5 +51,16 @@ public class OrderSettingController {
             e.printStackTrace();
             return new Result(false,MessageConstant.QUERY_ORDER_FAIL);
         }
+    }
+
+    @RequestMapping("/editNumberByDate")
+    public Result editNumberByDate(@RequestBody OrderSetting orderSetting){
+        try {
+            orderSettingService.editNumberByDate(orderSetting);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false,MessageConstant.ORDERSETTING_FAIL);
+        }
+        return new Result(true,MessageConstant.ORDERSETTING_SUCCESS);
     }
 }

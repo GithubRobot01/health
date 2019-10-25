@@ -74,6 +74,12 @@ public class CheckGroupServiceImpl implements CheckGroupService {
 
     @Override
     public void delById(int id) {
+        //查看该检查组是否被添加到套餐
+        long count=checkGroupMapper.findCountByGroupId(id);
+        if (count>0){
+            //该检查组已被关联到套餐
+            new RuntimeException();
+        }
         //删除中间表数据
         checkGroupMapper.delItemAndGroup(id);
         //删除checkgroup表数据

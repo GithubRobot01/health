@@ -53,6 +53,22 @@ public class SetmealController {
         return new Result(true,MessageConstant.PIC_UPLOAD_SUCCESS,fileName);
     }
 
+
+    @RequestMapping("/updatePicture")
+    public Result updatePicture(@RequestParam("imgFile") MultipartFile imgFile,String pictureName){
+        System.out.println(imgFile);
+        System.out.println(pictureName);
+        try {
+            //将图片上传到七牛云服务器覆盖掉原来的图片
+            QiniuUtils.upload2Qiniu(imgFile.getBytes(),pictureName);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new Result(false, MessageConstant.PIC_UPLOAD_FAIL);
+        }
+        return new Result(true,MessageConstant.PIC_UPLOAD_SUCCESS,pictureName);
+    }
+
+
     @RequestMapping("add")
     public Result add(@RequestBody Setmeal setmeal,Integer[] checkgroupIds){
         try {
@@ -68,6 +84,17 @@ public class SetmealController {
     public PageResult findPage(@RequestBody QueryPageBean queryPageBean){
         PageResult pageResult=setmealService.findAll(queryPageBean);
         return pageResult;
+    }
+
+    @RequestMapping("/findById")
+    public Result findById(Integer id){
+        try {
+            Setmeal setmeal=setmealService.findById(id);
+            return new Result(true,MessageConstant.QUERY_SETMEAL_SUCCESS,setmeal);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false,MessageConstant.QUERY_SETMEAL_FAIL);
+        }
     }
 
 }

@@ -14,4 +14,5 @@ public interface OrderSettingMapper {
     void editNumberByOrderDate(OrderSetting orderSetting);
 
     List<OrderSetting> getOrderSettingByMonth(String begin, String end);
+
 }

@@ -21,4 +21,19 @@
             where code like '%${value}%' or name like '%${value}%' or helpCode like '%${value}%'
         </if>
     </select>
+
+    <select id="findById" parameterType="int" resultType="cn.itcast.pojo.Setmeal">
+        select * from t_setmeal where id=#{id}
+    </select>
+
+    <select id="getAllSetmeal" resultType="cn.itcast.pojo.Setmeal">
+        select * from t_setmeal
+    </select>
+
+
+
+
+    <!--<select id="findBySetmealId" resultMap="SetmealResultMap" parameterType="int">
+
+    </select>-->
 </mapper>

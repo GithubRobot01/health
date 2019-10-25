@@ -7,10 +7,7 @@ import com.alibaba.dubbo.config.annotation.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service(interfaceClass = OrderSettingService.class)
 @Transactional
@@ -57,4 +54,14 @@ public class OrderSettingServiceImpl implements OrderSettingService {
         return result;
     }
 
+    @Override
+    public void editNumberByDate(OrderSetting orderSetting) {
+        //查询当前日期是否已经设置过预约人数
+        long count = orderSettingMapper.findCountByOrderDate(orderSetting.getOrderDate());
+        if (count==0){
+            orderSettingMapper.add(orderSetting);
+        }else {
+            orderSettingMapper.editNumberByOrderDate(orderSetting);
+        }
+    }
 }
