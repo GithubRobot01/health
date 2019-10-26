@@ -6,6 +6,7 @@ import cn.itcast.entity.QueryPageBean;
 import cn.itcast.mapper.SetmealMapper;
 import cn.itcast.pojo.Setmeal;
 import cn.itcast.service.SetmealService;
+import cn.itcast.utils.QiniuUtils;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -71,4 +72,44 @@ public class SetmealServiceImpl implements SetmealService {
         Setmeal setmeal = setmealMapper.findBySetmealId(id);
         return setmeal;
     }
+
+    @Override
+    public List<Integer> findCheckGroupById(int id) {
+        return setmealMapper.findCheckGroupById(id);
+    }
+
+    @Override
+    public void edit(Setmeal setmeal, Integer[] checkgroupIds, String imageName, String newImageName) {
+
+        //修改套餐信息
+        setmealMapper.editSetmeal(setmeal);
+        //修改套餐与检查组关联信息
+        setmealMapper.delSetmealAndGroup(setmeal.getId());
+        //重新建立关系
+        this.add(setmeal,checkgroupIds);
+        //新图片名不为空
+        if (!"".equals(newImageName)){
+            //将原来图片删除
+            QiniuUtils.deleteFileFromQiniu(imageName);
+            jedisPool.getResource().srem(RedisConstant.SETMEAL_PIC_RESOURCES,imageName);
+            jedisPool.getResource().srem(RedisConstant.SETMEAL_PIC_DB_RESOURCES,imageName);
+            //将新图片加入redis
+            jedisPool.getResource().sadd(RedisConstant.SETMEAL_PIC_DB_RESOURCES,newImageName);
+        }
+    }
+
+    @Override
+    public void deleteSetmeal(Integer id) {
+        //根据套餐id查询套餐图片名称
+        String imageName=setmealMapper.findImageNameById(id);
+        //删除图片
+        jedisPool.getResource().srem(RedisConstant.SETMEAL_PIC_DB_RESOURCES,imageName);
+        jedisPool.getResource().srem(RedisConstant.SETMEAL_PIC_RESOURCES,imageName);
+        QiniuUtils.deleteFileFromQiniu(imageName);
+        //删除中间表
+        setmealMapper.delSetmealAndGroup(id);
+        //删除套餐表数据
+        setmealMapper.delSetmealById(id);
+    }
+
 }

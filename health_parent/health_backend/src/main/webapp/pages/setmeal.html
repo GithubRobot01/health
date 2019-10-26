@@ -276,11 +276,10 @@
                                                         <el-upload
                                                                 class="avatar-uploader"
                                                                 action="/setmeal/updatePicture.do"
-                                                                :data={pictureName:this.imageName}
                                                                 :auto-upload="autoUpload"
                                                                 name="imgFile"
                                                                 :show-file-list="false"
-                                                                :on-success="handleAvatarSuccess"
+                                                                :on-success="handleAvatarSuccess1"
                                                                 :before-upload="beforeAvatarUpload">
                                                             <img v-if="imageUrl" :src="imageUrl" class="avatar">
                                                             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
@@ -347,7 +346,8 @@
             data:{
                 autoUpload:true,//自动上传
                 imageUrl:null,//模型数据，用于上传图片完成后图片预览
-                imageName:"",//用于回显时接收图片名称,并作为参数请求controller
+                imageName:"",//用于回显时接收图片名称
+                newImageName:"", //用于储存新的图片名称
                 activeName:'first',//添加/编辑窗口Tab标签名称
                 pagination: {//分页相关属性
                     currentPage: 1,
@@ -377,6 +377,20 @@
                     });
                     //设置模型数据(图片名称),后续提交ajax请求时会提交到后台最终保存到数据库
                     this.formData.img=response.data;
+                    this.imageName=response.data;
+                },
+                handleAvatarSuccess1(response, file) {//response:{"data":"ca4519f3-e928-4675-844c-c765802354e2.jpg","flag":true,"message":"图片上传成功"}
+                    //为模型数据imageUrl赋值,用于页面图片预览,url+图片名字
+                    this.imageUrl="http://pzq8ip498.bkt.clouddn.com/"+response.data;
+
+                    this.$message({
+                        type:response.flag?'success':'error',
+                        message:response.message
+                    });
+
+                    this.formData.img=response.data;
+                    this.newImageName=response.data;
+
                 },
                 //上传图片之前执行
                 beforeAvatarUpload(file) {
@@ -463,15 +477,64 @@
                         }else {
                             this.$message.error(res.data.message);
                         }
+                    });
+                    //发送ajax请求,查询检查组信息
+                    axios.post("/checkgroup/findAll.do").then((res)=>{
+                        if (res.data.flag){
+                            this.tableData=res.data.data;
+                            //发送ajax请求,回显检查组选择框
+                            axios.post("/setmeal/findCheckGroupById.do?id="+row.id).then((res)=>{
+                                if (res.data.flag){
+                                    this.checkgroupIds=res.data.data;
+                                }else {
+                                    this.$message.error(res.data.message);
+                                }
+                            })
+                        }else{
+                            this.$message.error(res.data.message);
+                        }
                     })
                 },
                 //删除
                 handleDelete(row){
-
+                    this.$confirm("您确定要删除该套餐信息吗?","提示",{
+                        type:'warning'
+                    }).then(()=>{
+                        //发送ajax请求删除套餐
+                        axios.post("/setmeal/del.do?id="+row.id).then((res)=>{
+                            if (res.data.flag){
+                                this.$message({
+                                    message:res.data.message,
+                                    type:'success'
+                                })
+                            }else {
+                                this.$message.error(res.data.message)
+                            }
+                        }).finally(()=>{
+                            this.findPage();
+                            })
+                    }).catch(()=>{
+                        this.$message({
+                            message:"删除操作已取消",
+                            type:'info'
+                        })
+                    })
                 },
                 //编辑
                 handleEdit(){
-
+                    axios.post("/setmeal/edit.do?checkgroupIds="+this.checkgroupIds+"&imageName="+this.imageName+"&newImageName="+this.newImageName,this.formData).then((res)=>{
+                        this.dialogFormVisible4Edit=false;
+                        if (res.data.flag){
+                            this.$message({
+                                message:res.data.message,
+                                type:'success'
+                            })
+                        }else {
+                            this.$message.error(res.data.message);
+                        }
+                    }).finally(()=>{
+                        this.findPage();
+                    })
                 }
             }
         })

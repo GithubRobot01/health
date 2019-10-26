@@ -5,8 +5,8 @@ import com.aliyuncs.exceptions.ClientException;
 import org.junit.Test;
 
 public class SMSTest {
-    @Test
+   /* @Test
     public void test() throws ClientException {
-        SMSUtils.sendShortMessage("SMS_175574720","15839926035","nishiSB");
-    }
+        SMSUtils.sendShortMessage("SMS_176535780","13393994596","ILoveYou");
+    }*/
 }

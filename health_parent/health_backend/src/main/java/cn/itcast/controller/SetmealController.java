@@ -5,6 +5,7 @@ import cn.itcast.constant.RedisConstant;
 import cn.itcast.entity.PageResult;
 import cn.itcast.entity.QueryPageBean;
 import cn.itcast.entity.Result;
+import cn.itcast.pojo.CheckGroup;
 import cn.itcast.pojo.Setmeal;
 import cn.itcast.service.SetmealService;
 import cn.itcast.utils.QiniuUtils;
@@ -18,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import redis.clients.jedis.JedisPool;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -55,17 +57,21 @@ public class SetmealController {
 
 
     @RequestMapping("/updatePicture")
-    public Result updatePicture(@RequestParam("imgFile") MultipartFile imgFile,String pictureName){
-        System.out.println(imgFile);
-        System.out.println(pictureName);
+    public Result updatePicture(@RequestParam("imgFile") MultipartFile imgFile){
+        String originalFilename = imgFile.getOriginalFilename();
+        int index = originalFilename.lastIndexOf(".");
+        String extension = originalFilename.substring(index);
+        String newFileName= UUID.randomUUID().toString()+extension;
         try {
-            //将图片上传到七牛云服务器覆盖掉原来的图片
-            QiniuUtils.upload2Qiniu(imgFile.getBytes(),pictureName);
+            //将图片上传到七牛云服务器
+            QiniuUtils.upload2Qiniu(imgFile.getBytes(),newFileName);
+
+            jedisPool.getResource().sadd(RedisConstant.SETMEAL_PIC_RESOURCES,newFileName);
         } catch (IOException e) {
             e.printStackTrace();
             return new Result(false, MessageConstant.PIC_UPLOAD_FAIL);
         }
-        return new Result(true,MessageConstant.PIC_UPLOAD_SUCCESS,pictureName);
+        return new Result(true,MessageConstant.PIC_UPLOAD_SUCCESS,newFileName);
     }
 
 
@@ -95,6 +101,39 @@ public class SetmealController {
             e.printStackTrace();
             return new Result(false,MessageConstant.QUERY_SETMEAL_FAIL);
         }
+    }
+
+    @RequestMapping("/edit")
+    public Result edit(@RequestBody Setmeal setmeal,Integer[] checkgroupIds,String imageName,String newImageName){
+        try {
+            setmealService.edit(setmeal,checkgroupIds,imageName,newImageName);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false,MessageConstant.EDIT_SETMEAL_FAIL);
+        }
+        return new Result(true,MessageConstant.EDIT_SETMEAL_SUCCESS);
+    }
+
+    @RequestMapping("/findCheckGroupById")
+    public Result findCheckGroupById(int id){
+        try {
+            List<Integer> checkGroups=setmealService.findCheckGroupById(id);
+            return new Result(true,MessageConstant.QUERY_CHECKGROUP_SUCCESS,checkGroups);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false,MessageConstant.QUERY_CHECKGROUP_FAIL);
+        }
+    }
+
+    @RequestMapping("/del")
+    public Result deleteSetmeal(Integer id){
+        try {
+            setmealService.deleteSetmeal(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false,MessageConstant.DELETE_SETMEAL_FAIL);
+        }
+        return new Result(true,MessageConstant.DELETE_SETMEAL_SUCCESS);
     }
 
 }

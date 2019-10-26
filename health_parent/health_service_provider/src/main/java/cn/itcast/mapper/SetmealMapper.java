@@ -2,10 +2,7 @@ package cn.itcast.mapper;
 
 import cn.itcast.pojo.Setmeal;
 import com.github.pagehelper.Page;
-import org.apache.ibatis.annotations.Many;
-import org.apache.ibatis.annotations.Result;
-import org.apache.ibatis.annotations.Results;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -37,4 +34,18 @@ public interface SetmealMapper {
                     many = @Many(select = "cn.itcast.mapper.CheckGroupMapper.findCheckGroupById"))
     })
     Setmeal findBySetmealId(int id);
+
+    @Select("select checkgroup_id from t_setmeal_checkgroup where setmeal_id=#{id}")
+    List<Integer> findCheckGroupById(int id);
+
+    void editSetmeal(Setmeal setmeal);
+
+    @Delete("delete from t_setmeal_checkgroup where setmeal_id=#{id}")
+    void delSetmealAndGroup(Integer id);
+
+    @Select("select img from t_setmeal where id=#{id}")
+    String findImageNameById(Integer id);
+
+    @Delete("delete from t_setmeal where id=#{id}")
+    void delSetmealById(Integer id);
 }
