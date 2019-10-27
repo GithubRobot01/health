@@ -14,7 +14,7 @@ import com.aliyuncs.profile.IClientProfile;
  */
 public class SMSUtils {
 	public static final String VALIDATE_CODE = "SMS_175574720";//发送短信验证码
-	public static final String ORDER_NOTICE = "SMS_159771588";//体检预约成功通知
+	public static final String ORDER_NOTICE = "SMS_176526162";//体检预约成功通知
 
 	/**
 	 * 发送短信
@@ -23,7 +23,7 @@ public class SMSUtils {
 	 * @throws ClientException
 	 */
 
-	public static void sendShortMessage(String templateCode,String phoneNumbers,String param) throws ClientException{
+	public static String sendShortMessage(String templateCode,String phoneNumbers,String param) throws ClientException{
 		// 设置超时时间-可自行调整
 		System.setProperty("sun.net.client.defaultConnectTimeout", "10000");
 		System.setProperty("sun.net.client.defaultReadTimeout", "10000");
@@ -56,10 +56,10 @@ public class SMSUtils {
 		// request.setOutId("yourOutId");
 		// 请求失败这里会抛ClientException异常
 		SendSmsResponse sendSmsResponse = acsClient.getAcsResponse(request);
-		System.out.println(sendSmsResponse.getCode());
 		if (sendSmsResponse.getCode() != null && sendSmsResponse.getCode().equals("OK")) {
 			// 请求成功
 			System.out.println("请求成功");
 		}
+		return sendSmsResponse.getCode();
 	}
 }

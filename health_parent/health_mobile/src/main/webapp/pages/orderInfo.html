@@ -114,21 +114,46 @@
                 methods:{
                     //发送验证码
                     sendValidateCode(){
-                        //获取用户输入的验证码
-                        var num=this.orderInfo.telephone;
+                        //获取用户输入的手机号
+                        var telephone=this.orderInfo.telephone;
                         //调用js方法,校验手机号是否合法
-                        if (!checkTelephone(num)){
+                        if (!checkTelephone(telephone)){
                             //校验不通过,提示错误信息
                             this.$message.error("请输入正确的手机号码!");
                             return false;
                         }
-                        //显示倒计时
                         //锁定dom对象
                         validateCodeButton=$("#validateCodeButton")[0];
+                        //定时器方法,可以实现每隔指定的时间调用指定的方法
                         clock=window.setInterval(doLoop,1000);
+                        //发送ajax请求,为用户发送验证码
+                        axios.post("/validateCode/send4Order.do?telephone="+telephone).then((res)=>{
+                            if (!res.data.flag){
+                                //验证码发送失败
+                                this.$message.error(res.data.message);
+                            }
+                        })
                     },
                     //提交预约
                     submitOrder(){
+                        //校验身份证号
+                        var cardId=this.orderInfo.idCard;
+                        if (!checkIdCard(cardId)) {
+                            this.$message.error("身份证号输入错误,请重新输入");
+                            return ;
+                        }
+                        //发送ajax请求,提交表单
+                        axios.post("/order/submit.do",this.orderInfo).then((res)=>{
+                            if (res.data.flag){
+                                /*this.$message({
+                                    message:res.data.message,
+                                    type:'success'
+                                })*/
+                                window.location.href="orderSuccess.html?orderId="+res.data.data;
+                            } else {
+                                this.$message.error(res.data.message);
+                            }
+                        })
                     }
                 },
                 mounted(){
