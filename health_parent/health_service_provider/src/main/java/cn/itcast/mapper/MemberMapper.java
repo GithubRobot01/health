@@ -18,7 +18,7 @@ public interface MemberMapper {
     void deleteById(Integer id);
     Member findById(Integer id);
     @Select("select * from t_member where phoneNumber=#{telephone}")
-    Member findByTelephone(String telephone);
+    Member findByTel(String telephone);
     void edit(Member member);
     Integer findMemberCountBeforeDate(String date);
     Integer findMemberCountByDate(String date);

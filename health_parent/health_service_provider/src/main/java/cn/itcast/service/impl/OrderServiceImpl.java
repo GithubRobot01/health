@@ -46,7 +46,7 @@ public class OrderServiceImpl implements OrderService {
         //3、检查用户是否重复预约（同一个用户在同一天预约了同一个套餐）,如果是重复预约则无法完成再次预约
         String telephone = (String) map.get("telephone");
         //根据手机号查询会员信息
-        Member member = memberMapper.findByTelephone(telephone);
+        Member member = memberMapper.findByTel(telephone);
         if (member!=null){
             //判断是否是重复预约
             Integer id = member.getId();

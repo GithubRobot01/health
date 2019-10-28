@@ -5,6 +5,7 @@
     <file type="web" url="file://$PROJECT_DIR$/health_parent/health_jobs" />
     <file type="web" url="file://$PROJECT_DIR$/health_parent/health_mobile" />
     <file type="web" url="file://$PROJECT_DIR$/health_parent/health_service_provider" />
+    <file type="web" url="file://$PROJECT_DIR$/springsecuritydemo" />
   </component>
   <component name="JavaScriptSettings">
     <option name="languageLevel" value="ES6" />
@@ -14,6 +15,7 @@
       <list>
         <option value="$PROJECT_DIR$/health_parent/pom.xml" />
         <option value="$PROJECT_DIR$/quartzdemo/pom.xml" />
+        <option value="$PROJECT_DIR$/springsecuritydemo/pom.xml" />
       </list>
     </option>
   </component>
