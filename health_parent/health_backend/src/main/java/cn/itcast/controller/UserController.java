@@ -16,10 +16,14 @@ public class UserController {
     @RequestMapping("/getUsername")
     public Result getUsername(){
         //当spring security完成认证后,会将当前用户信息保存到框架提供的上下文对象
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String name = SecurityContextHolder.getContext().getAuthentication().getName();
+        /*User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         System.out.println(user);
         if (user!=null){
             return new Result(true, MessageConstant.GET_USERNAME_SUCCESS,user.getUsername());
+        }*/
+        if (name!=null&&!("".equals(name))){
+            return new Result(true, MessageConstant.GET_USERNAME_SUCCESS,name);
         }
         return new Result(false,MessageConstant.GET_USERNAME_FAIL);
     }
