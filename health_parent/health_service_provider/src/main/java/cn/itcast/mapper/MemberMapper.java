@@ -20,6 +20,7 @@ public interface MemberMapper {
     @Select("select * from t_member where phoneNumber=#{telephone}")
     Member findByTel(String telephone);
     void edit(Member member);
+    @Select("SELECT COUNT(id) FROM t_member WHERE regTime <= #{date}")
     Integer findMemberCountBeforeDate(String date);
     Integer findMemberCountByDate(String date);
     Integer findMemberCountAfterDate(String date);

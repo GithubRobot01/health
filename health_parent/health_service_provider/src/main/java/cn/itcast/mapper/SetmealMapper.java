@@ -5,6 +5,7 @@ import com.github.pagehelper.Page;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
+import java.util.Map;
 
 public interface SetmealMapper {
     void addMeal(Setmeal setmeal);
@@ -48,4 +49,8 @@ public interface SetmealMapper {
 
     @Delete("delete from t_setmeal where id=#{id}")
     void delSetmealById(Integer id);
+
+    @Select("SELECT s.name,count(o.id) value FROM t_setmeal s,t_order o WHERE s.id=o.setmeal_id GROUP BY s.name")
+    List<Map<String, Object>> findSetmealCount();
+
 }

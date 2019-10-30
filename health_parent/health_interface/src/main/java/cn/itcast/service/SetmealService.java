@@ -6,6 +6,7 @@ import cn.itcast.pojo.CheckGroup;
 import cn.itcast.pojo.Setmeal;
 
 import java.util.List;
+import java.util.Map;
 
 public interface SetmealService {
 
@@ -64,4 +65,10 @@ public interface SetmealService {
      * @param id
      */
     void deleteSetmeal(Integer id);
+
+    /**
+     * 查询所有套餐及其被预约数量
+     * @return
+     */
+    List<Map<String, Object>> findSetmealCount();
 }

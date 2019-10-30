@@ -14,7 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import redis.clients.jedis.JedisPool;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service(interfaceClass = SetmealService.class)
 @Transactional
@@ -110,6 +112,11 @@ public class SetmealServiceImpl implements SetmealService {
         setmealMapper.delSetmealAndGroup(id);
         //删除套餐表数据
         setmealMapper.delSetmealById(id);
+    }
+
+    @Override
+    public List<Map<String, Object>> findSetmealCount() {
+        return setmealMapper.findSetmealCount();
     }
 
 }
