@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+
+    <context:component-scan base-package="cn.itcast.pinyougou.realm"></context:component-scan>
+
+    <!-- 配置Shiro核心Filter,可以进行url级别的权限控制 -->
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <!-- 配置 securityManager安全管理器 -->
+        <property name="securityManager" ref="securityManager"/>
+        <!-- 未认证（没登陆），跳转到哪个页面 -->
+        <property name="loginUrl" value="/login.html"/>
+        <!-- 登录成功跳转的页面 -->
+        <property name="successUrl" value="/admin/index.html"/>
+
+        <!-- shiro 自定义URL权限控制过滤器规则 -->
+        <property name="filterChainDefinitions">
+            <value>
+                <!--anon：不参与权限控制-->
+                /login.html* = anon
+                /user/login.do*=anon
+
+                /css/** = anon
+                /img/** = anon
+                /js/** = anon
+                /plugins/** = anon
+
+                <!-- 设置访问的角色和权限，将来 securityManager调用realm查询数据库数据库，返回数据来进行判断-->
+                <!-- 设置访问权限 401/403错误表示未授权-->
+                /admin/brand.html* = perms[PER_ADMIN]
+                <!-- 设置访问角色 -->
+                /admin/specification.html* = roles[ROLE_ADMIN]
+
+                <!-- authc : 认证（登录）后可以访问 -->
+                /** = authc
+            </value>
+        </property>
+    </bean>
+
+    <!-- 安全管理器 -->
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <property name="realm" ref="realm"></property>
+    </bean>
+
+
+
+
+
+
+
+    <!-- shiro处理器，可以处理初始化和释放资源操作 -->
+    <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />
+    <!--开启shiro注解模式
+	    depends-on:设置控制代理对象生成和销毁由谁操作
+	-->
+    <bean
+            class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
+            depends-on="lifecycleBeanPostProcessor" >
+        <property name="proxyTargetClass" value="true"></property>
+    </bean>
+    <bean
+            class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+        <property name="securityManager" ref="securityManager" />
+    </bean>
+
+</beans>

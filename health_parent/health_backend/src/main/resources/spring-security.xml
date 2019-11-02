@@ -44,7 +44,7 @@
         <security:form-login
                 login-page="/login.html"
                 username-parameter="username"
-                password-parameter="j"
+                password-parameter="password"
                 login-processing-url="/login.do"
                 default-target-url="/pages/main.html"
                 authentication-failure-url="/login.html"/>

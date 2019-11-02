@@ -29,4 +29,19 @@ public interface OrderMapper {
 
     @Select("select name from t_setmeal where id=#{id}")
     String findSetmealById(Integer setmealId);
+
+    @Select("select count(*) from t_order where orderDate = #{today}")
+    Integer findOrderCountByDate(String today);
+
+    @Select("select count(*) from t_order where orderDate = #{today} and orderStatus ='已到诊'")
+    Integer findVisitCountByDate(String today);
+
+    @Select("select count(*) from t_order where orderDate >= #{today} and orderStatus ='已到诊'")
+    Integer findVisitCountAfterDate(String monday);
+
+    @Select("select count(*) from t_order where orderDate >= #{today}")
+    Integer findOrderCountAfterDate(String monday);
+
+    @Select("SELECT s.name,COUNT(o.id) setmeal_count,COUNT(o.id)/(SELECT COUNT(id) proportion FROM t_order) proportion FROM t_order o,t_setmeal s WHERE o.setmeal_id=s.id GROUP BY s.name ORDER BY setmeal_count DESC LIMIT 0,4")
+    List<Map<String, Object>> findHotSetmeal();
 }
