@@ -21,7 +21,7 @@
         <junit.version>4.12</junit.version>
         <javassist.version>3.11.0.GA</javassist.version>
         <commonscodec.version>1.10</commonscodec.version>
-        <mysql.version>5.1.36</mysql.version>
+        <mysql.version>8.0.16</mysql.version>
         <jack.version>2.8.8</jack.version>
         <druid.version>1.0.9</druid.version>
         <shiro.version>1.2.2</shiro.version>
